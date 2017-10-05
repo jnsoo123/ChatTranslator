@@ -52,6 +52,7 @@ div {
 
 .container {
 	padding: 15px;
+	width: 100%;
 }
 
 .textfield {
@@ -78,7 +79,7 @@ div {
 }
 
 .chat-box {
-	width: 60%;
+	width: 100%;
 	margin-bottom: 15px;
 }
 
@@ -93,7 +94,7 @@ div {
 	}	
 
 .chat-field {
-	width: 60%;
+	width: 100%%;
 	margin-bottom: 15px;
 }
 
@@ -103,7 +104,12 @@ div {
 
 .lang-change {
 	float: left;
-	margin-right: 11%;
+	margin-right: 14.3%;
+}
+
+.lang-block {
+	float: left;
+	margin-right: 15px;
 }
 
 .exit-room {
@@ -120,6 +126,7 @@ div {
 	color: #fff;
 	transition: 0.3s;
 	padding: 5px;
+	margin-top: 24%;
 }
 
   .leave:hover {

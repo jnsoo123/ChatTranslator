@@ -4,18 +4,18 @@
 <section class="top">
 <h1>Chat Auto Translator</h1>
 </section>
-<section class="container">
+<section class="container container-fluid">
   <form method="POST">
     {{ form.hidden_tag() }}
-    {{ form.name(placeholder="Name", class_="textfield") }} {% for error in form.name.errors %}{{ error }}{% endfor %}
+    {{ form.name(placeholder="Name", class_="textfield form-control") }} {% for error in form.name.errors %}{{ error }}{% endfor %}
     <br>
-    {{ form.room(placeholder="Room Name", class_="textfield") }} {% for error in form.room.errors %}{{ error }}{% endfor %}
+    {{ form.room(placeholder="Room Name", class_="textfield form-control") }} {% for error in form.room.errors %}{{ error }}{% endfor %}
     <br>
-    {{ form.from_locale(placeholder="From locale e.g. EN", class_="textfield") }} {% for error in form.from_locale.errors %}{{ error }}{% endfor %}
+    {{ form.from_locale(placeholder="From locale e.g. EN", class_="textfield form-control") }} {% for error in form.from_locale.errors %}{{ error }}{% endfor %}
     <br>
-    {{ form.to_locale(placeholder="To locale e.g. JA", class_="textfield") }} {% for error in form.to_locale.errors %}{{ error }}{% endfor %}
+    {{ form.to_locale(placeholder="To locale e.g. JA", class_="textfield form-control") }} {% for error in form.to_locale.errors %}{{ error }}{% endfor %}
     <br>
-    {{ form.submit(class_="submit") }}
+    {{ form.submit(class_="submit form-control") }}
   </form>
 </section>
 </div>
