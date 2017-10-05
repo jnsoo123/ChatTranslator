@@ -28,6 +28,9 @@ $(document).ready(function(){
       socket.emit('text', {msg: text});
     }
   });
+
+  $('#translator-locale-changer option[data-locale={{ session['from_locale'] }}]').attr('selected', 'selected');
+  $('#chat-locale-changer option[data-locale={{ session['to_locale'] }}]').attr('selected', 'selected');
 });
 
 function leave_room() {
