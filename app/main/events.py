@@ -41,3 +41,7 @@ def left(message):
     leave_room(room)
     emit('status', {'msg': session.get('name') + ' has left the room.'}, room=room)
 
+@socketio.on('change_locale', namespace='/chat')
+def change_locale(locale):
+    """Change locale of the current user"""
+    session['to_locale'] = locale['locale']

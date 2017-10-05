@@ -29,19 +29,31 @@ $(document).ready(function(){
     }
   });
 });
+
 function leave_room() {
   socket.emit('left', {}, function() {
     socket.disconnect();
-
     // go back to the login page
     window.location.href = "{{ url_for('main.index') }}";
   });
+}
+
+function change_locale() {
+  // change current locale
+  let locale = $('#locale-changer').find(':selected').attr('data-locale');
+  socket.emit('change_locale', { locale: locale })  
 }
 </script>
 {% endblock %}
 <h1>Chat Auto Translator: {{ room }}</h1>
 <textarea id="chat" cols="80" rows="20"></textarea><br><br>
 <input id="text" size="80" placeholder="Enter your message here"><br><br>
-<a href="#" onclick="leave_room();">Leave this room</a>
+<label>Change Translator to:</label>
+<select id='locale-changer' onchange="change_locale()">
+  <option data-locale='en-US'>English</option>
+  <option data-locale='ja'>Japanese</option>
+  <option data-locale='zh-TK'>Chinese</option>
+</select><br>
+<a href="#" onclick="leave_room();">Leave this room</a><br>
 
 {% endblock %}
