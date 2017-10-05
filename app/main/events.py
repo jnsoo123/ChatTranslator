@@ -23,19 +23,10 @@ def text(message):
     translation_locale  = session.get('to_locale')
     original_locale     = session.get('from_locale')
 
-    translate = Translator(to_lang=translation_locale, from_lang=original_locale)
+    translator      = Translator(to_lang=translation_locale, from_lang=original_locale)
+    translated_text = translate_text(text, translator)
 
-    try:
-        translated_text = translate.translate(text)
-    except KeyError:
-        try:
-            translated_text = translate.translate(str(text))
-        except UnicodeEncodeError:
-            translated_text = urllib.quote(translate.translate(text.encode('utf-8')))
-        except UnicodeEncodeError:
-            translated_text = urllib.quote(translate.translate(text.encode('utf-8')))
-
-    emit('message', {'msg': u"{0}: {1}({2}: {3})".format(name, translated_text, original_locale, text)}, room=room)
+    emit('message', {'msg': u"{0}: {1} ({2}: {3})".format(name, translated_text, original_locale, text)}, room=room)
 
 @socketio.on('left', namespace='/chat')
 def left(message):
@@ -49,3 +40,16 @@ def left(message):
 def change_locale(data):
     """Change locale of the current user"""
     session[data['type']] = data['locale']
+
+def translate_text(text, translator):
+    try:
+        translated_text = translator.translate(text)
+    except KeyError:
+        try:
+            translated_text = translator.translate(str(text))
+        except UnicodeEncodeError:
+            translated_text = urllib.quote(translator.translate(text.encode('utf-8')))
+        except UnicodeEncodeError:
+            translated_text = urllib.quote(translator.translate(text.encode('utf-8')))
+
+    return urllib.unquote(translated_text)
