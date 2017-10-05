@@ -29,8 +29,8 @@ $(document).ready(function(){
     }
   });
 
-  $('#translator-locale-changer option[data-locale={{ session['from_locale'] }}]').attr('selected', 'selected');
-  $('#chat-locale-changer option[data-locale={{ session['to_locale'] }}]').attr('selected', 'selected');
+  $('#translator-locale-changer option[data-locale={{ session['to_locale'] }}]').attr('selected', 'selected');
+  $('#chat-locale-changer option[data-locale={{ session['from_locale'] }}]').attr('selected', 'selected');
 });
 
 function leave_room() {
