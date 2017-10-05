@@ -1,14 +1,22 @@
 {% extends 'layout.html' %}
 {% block body %}
-
+<div class="content front">
+<section class="top">
 <h1>Chat Auto Translator</h1>
-<form method="POST">
-  {{ form.hidden_tag() }}
-  {{ form.name.label }}: {{ form.name() }} {% for error in form.name.errors %}{{ error }}{% endfor %}<br>
-  {{ form.room.label }}: {{ form.room() }} {% for error in form.room.errors %}{{ error }}{% endfor %}<br>
-  {{ form.from_locale.label }}: {{ form.from_locale() }} {% for error in form.from_locale.errors %}{{ error }}{% endfor %}<br>
-  {{ form.to_locale.label }}: {{ form.to_locale() }} {% for error in form.to_locale.errors %}{{ error }}{% endfor %}<br>
-  {{ form.submit() }}
-</form>
-
+</section>
+<section class="container">
+  <form method="POST">
+    {{ form.hidden_tag() }}
+    {{ form.name(placeholder="Name", class_="textfield") }} {% for error in form.name.errors %}{{ error }}{% endfor %}
+    <br>
+    {{ form.room(placeholder="Room Name", class_="textfield") }} {% for error in form.room.errors %}{{ error }}{% endfor %}
+    <br>
+    {{ form.from_locale(placeholder="From locale e.g. EN", class_="textfield") }} {% for error in form.from_locale.errors %}{{ error }}{% endfor %}
+    <br>
+    {{ form.to_locale(placeholder="To locale e.g. JA", class_="textfield") }} {% for error in form.to_locale.errors %}{{ error }}{% endfor %}
+    <br>
+    {{ form.submit(class_="submit") }}
+  </form>
+</section>
+</div>
 {% endblock %}

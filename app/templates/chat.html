@@ -45,15 +45,29 @@ function change_locale() {
 }
 </script>
 {% endblock %}
-<h1>Chat Auto Translator: {{ room }}</h1>
-<textarea id="chat" cols="80" rows="20"></textarea><br><br>
-<input id="text" size="80" placeholder="Enter your message here"><br><br>
-<label>Change Translator to:</label>
-<select id='locale-changer' onchange="change_locale()">
-  <option data-locale='en-US'>English</option>
-  <option data-locale='ja'>Japanese</option>
-  <option data-locale='zh-TK'>Chinese</option>
-</select><br>
-<a href="#" onclick="leave_room();">Leave this room</a><br>
-
+<div class="content chat">
+  <section class="top">
+    <h1>Chat Auto Translator: {{ room }}</h1>
+  </section>
+  <section class="container">
+    <div class="chat-box">
+      <textarea disabled="true" id="chat" cols="80" rows="20"></textarea>
+    </div>
+    <div class="chat-field">
+      <input id="text" size="80" placeholder="Enter your message here">
+    </div>
+    <div class="lang-change">
+      <label>Change Translator to:</label>
+      <select id='locale-changer' onchange="change_locale()">
+        <option data-locale='en-US'>English</option>
+        <option data-locale='ja'>Japanese</option>
+        <option data-locale='zh-TK'>Chinese</option>
+      </select>
+    </div>
+    <div class="exit-room">
+      <a href="#" class="leave" onclick="leave_room();">Leave this room</a>
+    </div>
+    <div class="clear"></div>
+  </section>
+</div>
 {% endblock %}
