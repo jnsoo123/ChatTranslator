@@ -16,9 +16,13 @@ def joined(message):
 def text(message):
     """Sent by a client when the user entered a new message.
     The message is sent to all people in the room."""
-    text = message['msg']
-    room = session.get('room')
-    translate = Translator(to_lang=session.get('to_locale'), from_lang=session.get('from_locale'))
+    text                = message['msg']
+    room                = session.get('room')
+    name                = session.get('name')
+    translation_locale  = session.get('to_locale')
+    original_locale     = session.get('from_locale')
+
+    translate = Translator(to_lang=translation_locale, from_lang=original_locale)
 
     try:
         translated_text = translate.translate(text)
@@ -30,7 +34,8 @@ def text(message):
         except UnicodeEncodeError:
             translated_text = urllib.quote(translate.translate(text.encode('utf-8')))
 
-    emit('message', {'msg': session.get('name') + ':' + translated_text}, room=room)
+    emit('message', {'msg': u"{0}: {1}({2}: {3})".format(name, translated_text, original_locale, text)}, room=room)
+    #emit('message', {'msg': session.get('name') + ':' + translated_text + "(" + text + ")"}, room=room)
 
 
 @socketio.on('left', namespace='/chat')
