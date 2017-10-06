@@ -9,4 +9,4 @@ class LoginForm(Form):
     room = StringField('Room', validators=[Required()])
     from_locale = StringField('From Locale', validators=[Required()])
     to_locale = StringField('To Locale', validators=[Required()])
-    submit = SubmitField('Enter Chatroom')
+    submit = SubmitField('Join Room')

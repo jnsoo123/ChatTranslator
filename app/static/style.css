@@ -1,0 +1,140 @@
+body {
+  background: url(https://www.toptal.com/designers/subtlepatterns/patterns/concrete_seamless.png) repeat 0 0;
+  margin: 0;
+  padding: 0;
+}
+
+h1 {
+	margin: 0;
+	padding: 0;
+}
+
+div {
+	margin: 0;
+	padding: 0;
+}
+
+.content {
+	display: block;
+	width: 70%;
+	margin: 3% auto;
+	background: #fff;
+	box-shadow: 0px 0px 2px rgba(0,0,0,0.3); 
+	border-radius: 8px 8px 8px 8px;
+	overflow: hidden;
+}
+
+.front {
+	max-width: 400px;
+}
+
+	.front input {
+		margin: 6px 0;
+	}
+
+.chat {
+	max-width: 720px;
+}
+
+.top {
+	background: #cf7f0c;
+	padding: 15px;
+	margin-bottom: 15px;
+	width: 100%;
+	box-shadow: 0px 2px 3px rgba(0,0,0,0.3);
+	text-align: center;
+}
+
+	.top h1 {
+		color: #fff;
+		font-size: 20px;
+	}
+
+.container {
+	padding: 15px;
+	width: 100%;
+}
+
+.textfield {
+	width: 360px;
+	margin: 3px auto;
+}
+
+.submit {
+	transition: 0.3s;
+	border-radius: 4px;
+	border: 0;
+	width: 360px;
+	display: block;
+	position: block;
+	margin: 5px auto;
+	padding: 8px;
+	box-shadow: 0px 0px 2px rgba(0,0,0,0.5);
+	text-align: center;
+}
+
+.submit:hover {
+	transition: 0.3s;
+	background: #e8ba78;
+}
+
+.chat-box {
+	width: 100%;
+	margin-bottom: 15px;
+}
+
+	.chat-box textarea {
+  		border-radius: 4px;
+  		width: 100%;
+  		box-shadow: 0px 0px 2px rgba(0,0,0,0.5);
+  		padding: 8px;
+  		font-size: 12px;
+  		color: rgba(0,0,0,0.6);
+  		border: 0;
+	}	
+
+.chat-field {
+	width: 100%%;
+	margin-bottom: 15px;
+}
+
+  	.chat-field input {
+    	width: 100%;
+  	}
+
+.lang-change {
+	float: left;
+	margin-right: 14.3%;
+}
+
+.lang-block {
+	float: left;
+	margin-right: 15px;
+}
+
+.exit-room {
+	float:left;
+}
+
+.leave {
+	display: block;
+	width: 300px;
+	background: #e45050;
+	text-align: center;
+	border-radius: 4px;
+	box-shadow: 0px 0px 2px rgba(0,0,0,0.5);
+	color: #fff;
+	transition: 0.3s;
+	padding: 5px;
+	margin-top: 24%;
+}
+
+  .leave:hover {
+  	color: #fff;
+  	background: #ff7e7e;
+  	transition: 0.3s;
+  }
+
+  .clear {
+  	clear: both;
+  }

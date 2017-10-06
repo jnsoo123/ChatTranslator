@@ -54,21 +54,41 @@ function change_chat_locale() {
 }
 </script>
 {% endblock %}
-<h1>Chat Auto Translator: {{ room }}</h1>
-<textarea id="chat" cols="80" rows="20"></textarea><br><br>
-<input id="text" size="80" placeholder="Enter your message here"><br><br>
-<label>Change current chat locale:</label>
-<select id='chat-locale-changer' onchange="change_chat_locale()">
-  <option data-locale='en-US'>English</option>
-  <option data-locale='ja'>Japanese</option>
-  <option data-locale='zh-TK'>Chinese</option>
-</select><br>
-<label>Change Translator to:</label>
-<select id='translator-locale-changer' onchange="change_translator_locale()">
-  <option data-locale='en-US'>English</option>
-  <option data-locale='ja'>Japanese</option>
-  <option data-locale='zh-TK'>Chinese</option>
-</select><br>
-<a href="#" onclick="leave_room();">Leave this room</a><br>
-
+<div class="content chat">
+  <section class="top">
+    <h1>Chat Auto Translator: {{ room }}</h1>
+  </section>
+  <section class="container container-fluid">
+    <div class="chat-box">
+      <textarea disabled="true" class="form-control" id="chat" cols="80" rows="20"></textarea>
+    </div>
+    <div class="chat-field">
+      <input id="text" size="80" placeholder="Enter your message here" class="form-control">
+    </div>
+    <div class="lang-change">
+      <h5>Change language Settings</h5>
+      <div class="lang-block">
+        <label class="label">Current Chat Language:</label>
+        <select id='chat-locale-changer' class="form-control" onchange="change_chat_locale()">
+          <option data-locale='en-US'>English</option>
+          <option data-locale='ja'>Japanese</option>
+          <option data-locale='zh-TK'>Chinese</option>
+        </select>
+      </div>
+      <div class="lang-block">
+        <label class="label">Change Translation to:</label>
+        <select id='translator-locale-changer' class="form-control" onchange="change_translator_locale()">
+          <option data-locale='en-US'>English</option>
+          <option data-locale='ja'>Japanese</option>
+          <option data-locale='zh-TK'>Chinese</option>
+        </select>
+      </div>
+      <div class="clear"></div>
+    </div>
+    <div class="exit-room">
+      <a href="#" class="leave btn-warning" onclick="leave_room();">Leave this room</a>
+    </div>
+    <div class="clear"></div>
+  </section>
+</div>
 {% endblock %}
