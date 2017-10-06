@@ -20,6 +20,8 @@ def text(message):
     """Sent by a client when the user entered a new message.
     The message is sent to all people in the room."""
 
+    print message
+
     text                = message['msg']
     room                = session.get('room')
     name                = session.get('name')

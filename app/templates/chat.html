@@ -3,8 +3,12 @@
 {% block javascript %}
 <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
 <script type="text/javascript" charset="utf-8">
+$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 var socket;
+
 $(document).ready(function(){
+  var recordButton = $('#record-voice')
+
   socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
   socket.on('connect', function() {
     socket.emit('joined', {});
@@ -32,6 +36,60 @@ $(document).ready(function(){
   $('.message-container').each(function(){
     $('#chat').val($('#chat').val() + $(this).val() + '\n')
   })
+
+  navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUsermedia || naigator.mozGetUserMedia;
+  if(navigator.getUserMedia){
+    console.log('Get User Media Supported');
+    navigator.getUserMedia({
+      audio: true
+    },
+    function(stream){
+      console.log('callback successfull');
+      var mediaRecorder = new MediaRecorder(stream);
+      var chunks = []
+        mediaRecorder.ondataavailable = function(e){
+          chunks.push(e.data);
+        }
+
+      mediaRecorder.onstop = function(e) {
+        recordButton.html('Translating...');
+        var blob = new Blob(chunks, { 'type': 'audio/ogg;codecs=opus' });
+        var form = new FormData();
+        var lang = $('#chat-locale-changer').find(':selected').attr('data-locale');
+        form.append('file', blob);
+        form.append('language', lang);
+        $.ajax({
+          type: 'POST',
+          url: $SCRIPT_ROOT + '/_record_voice',
+          data: form,
+          processData: false,
+          contentType: false
+        }).done(function(data){
+          recordButton.html('Hold to record <i class="fa fa-microphone"></i>');
+          if(data != 'Unable to understand') {
+            $('#text').val(data);
+            var e = $.Event('keypress', { which: 13 });
+            $('#text').trigger(e);
+          } else {
+            console.log('not understand');
+          }
+        });
+        chunks = [];
+      }
+
+      recordButton.on('mousedown', function(){
+        recordButton.html('Recording...');
+        mediaRecorder.start();
+      }).on('mouseup mouseleave', function(){
+        mediaRecorder.stop();
+      })
+    },
+    function(err) {
+      console.log(err);
+      console.log('failure callback');
+    });
+  }
+
 });
 
 function leave_room() {
@@ -66,8 +124,15 @@ function change_chat_locale() {
     <div class="chat-box">
       <textarea disabled="true" class="form-control" id="chat" cols="80" rows="20"></textarea>
     </div>
-    <div class="chat-field">
-      <input id="text" size="80" placeholder="Enter your message here" class="form-control">
+    <div class='row'>
+      <div class='col-xs-9'>
+        <div class="chat-field">
+          <input id="text" size="80" placeholder="Enter your message here" class="form-control">
+        </div>
+      </div>
+      <div class='col-xs-3'>
+        <button id='record-voice' class='btn btn-primary'>Hold to record <i class='fa fa-microphone'></i></button>
+      </div>
     </div>
     <div class="lang-change">
       <h5>Change language Settings</h5>
