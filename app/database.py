@@ -7,10 +7,9 @@ def get_app():
 
 def connect_db():
     """Connects to the database."""
-    app = get_app()
-    rv = sqlite3.connect(app.config['DATABASE'])
-    rv.row_factory = sqlite3.Row
-    print('Database Connected')
+    app             = get_app()
+    rv              = sqlite3.connect(app.config['DATABASE'])
+    rv.row_factory  = sqlite3.Row
     return rv
 
 def get_db():
@@ -20,6 +19,7 @@ def get_db():
 
 def init_db():
     app = get_app()
-    db = get_db()
+    db  = get_db()
+
     with app.open_resource('schema.sql', mode='r') as f:
         db.cursor().executescript(f.read())
