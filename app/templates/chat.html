@@ -28,6 +28,9 @@ $(document).ready(function(){
       socket.emit('text', {msg: text});
     }
   });
+
+  $('#translator-locale-changer option[data-locale={{ session['to_locale'] }}]').attr('selected', 'selected');
+  $('#chat-locale-changer option[data-locale={{ session['from_locale'] }}]').attr('selected', 'selected');
 });
 
 function leave_room() {
@@ -38,10 +41,16 @@ function leave_room() {
   });
 }
 
-function change_locale() {
+function change_translator_locale() {
   // change current locale
-  let locale = $('#locale-changer').find(':selected').attr('data-locale');
-  socket.emit('change_locale', { locale: locale })  
+  let locale = $('#translator-locale-changer').find(':selected').attr('data-locale');
+  socket.emit('change_locale', { type: 'to_locale', locale: locale })  
+}
+
+function change_chat_locale() {
+  // change chat locale
+  let locale = $('#chat-locale-changer').find(':selected').attr('data-locale');
+  socket.emit('change_locale', { type: 'from_locale', locale: locale })  
 }
 </script>
 {% endblock %}

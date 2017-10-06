@@ -7,13 +7,17 @@
 <section class="container container-fluid">
   <form method="POST">
     {{ form.hidden_tag() }}
+    <label>Name</label>
     {{ form.name(placeholder="Name", class_="textfield form-control") }} {% for error in form.name.errors %}{{ error }}{% endfor %}
     <br>
+    <label>Room</label>
     {{ form.room(placeholder="Room Name", class_="textfield form-control") }} {% for error in form.room.errors %}{{ error }}{% endfor %}
     <br>
-    {{ form.from_locale(placeholder="From locale e.g. EN", class_="textfield form-control") }} {% for error in form.from_locale.errors %}{{ error }}{% endfor %}
+    <label>Set chat locale</label>
+    {{ form.from_locale(placeholder="e.g. EN", class_="textfield form-control") }} {% for error in form.from_locale.errors %}{{ error }}{% endfor %}
     <br>
-    {{ form.to_locale(placeholder="To locale e.g. JA", class_="textfield form-control") }} {% for error in form.to_locale.errors %}{{ error }}{% endfor %}
+    <label>Set chat translator</label>
+    {{ form.to_locale(placeholder="e.g. JA", class_="textfield form-control") }} {% for error in form.to_locale.errors %}{{ error }}{% endfor %}
     <br>
     {{ form.submit(class_="submit form-control") }}
   </form>

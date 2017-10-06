@@ -27,7 +27,6 @@ def chat():
     the session."""
     name = session.get('name', '')
     room = session.get('room', '')
-    locale = session.get('locale', '')
     if name == '' or room == '':
         return redirect(url_for('.index'))
     return render_template('chat.html', name=name, room=room)
