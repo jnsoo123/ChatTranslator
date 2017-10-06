@@ -2,6 +2,7 @@ from flask import session, redirect, url_for, render_template, request
 from . import main
 from .forms import LoginForm
 from flask_bootstrap import Bootstrap
+from .. import database
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
@@ -27,6 +28,11 @@ def chat():
     the session."""
     name = session.get('name', '')
     room = session.get('room', '')
+
+    db = database.get_db()
+    cur = db.execute('select message from messages where room = ? order by id desc', [room])
+    messages = cur.fetchall()
+
     if name == '' or room == '':
         return redirect(url_for('.index'))
-    return render_template('chat.html', name=name, room=room)
+    return render_template('chat.html', name=name, room=room, messages=messages)
