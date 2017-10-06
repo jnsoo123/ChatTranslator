@@ -37,7 +37,7 @@ $(document).ready(function(){
     $('#chat').val($('#chat').val() + $(this).val() + '\n')
   })
 
-  navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUsermedia || naigator.mozGetUserMedia;
+  navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUsermedia || navigator.mozGetUserMedia;
   if(navigator.getUserMedia){
     console.log('Get User Media Supported');
     navigator.getUserMedia({
