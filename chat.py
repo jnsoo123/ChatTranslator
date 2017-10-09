@@ -57,4 +57,6 @@ def remove_files():
             os.remove(f)
 
 if __name__ == '__main__':
-    socketio.run(app)
+    context = ssl.SSLContext(ssl.PROTOCOL_TLSv1_2)
+    context.load_cert_chain('host.cert', 'host.key')
+    socketio.run(app, ssl_context=context)
