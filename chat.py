@@ -1,4 +1,9 @@
 #!/bin/env python
+import eventlet
+
+eventlet.sleep()
+eventlet.monkey_patch()
+
 from app import create_app, socketio, database
 from flask import g, jsonify, request, session
 import subprocess as sp
