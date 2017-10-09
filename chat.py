@@ -4,6 +4,7 @@ from flask import g, jsonify, request, session
 import subprocess as sp
 import speech_recognition as sr
 import os
+import ssl
 
 app = create_app(debug=True)
 
