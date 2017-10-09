@@ -13,7 +13,8 @@ def create_app(debug=False):
         DATABASE=os.path.join(app.root_path, 'chat.db'),
         SECRET_KEY='gjr39dkjn344_!67#',
         USERNAME='admin',
-        PASSWORD='default'
+        PASSWORD='default',
+        PREFERRED_URL_SCHEME='https'
     ))
 
     Bootstrap(app)
