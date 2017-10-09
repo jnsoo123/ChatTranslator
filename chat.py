@@ -57,4 +57,4 @@ def remove_files():
             os.remove(f)
 
 if __name__ == '__main__':
-    socketio.run(app, certfile='host.cert', keyfile='host.key')
+    socketio.run(app, certfile='host.crt', keyfile='host.key')
