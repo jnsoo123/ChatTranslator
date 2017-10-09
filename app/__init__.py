@@ -19,6 +19,11 @@ def create_app(debug=True):
 
     Bootstrap(app)
 
+    import eventlet
+
+    eventlet.sleep()
+    eventlet.monkey_patch()
+
     from .main import main as main_blueprint
     app.register_blueprint(main_blueprint)
 
