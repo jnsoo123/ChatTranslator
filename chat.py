@@ -6,7 +6,7 @@ import speech_recognition as sr
 import os
 import ssl
 
-app = create_app(debug=True)
+app = create_app(debug=False)
 
 @app.teardown_appcontext
 def close_db(error):
