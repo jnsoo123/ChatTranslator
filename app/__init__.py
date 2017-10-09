@@ -5,7 +5,7 @@ import os
 
 socketio = SocketIO()
 
-def create_app(debug=False):
+def create_app(debug=True):
     """Create an application."""
     app = Flask(__name__)
     app.debug = debug

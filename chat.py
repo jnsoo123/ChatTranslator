@@ -4,7 +4,6 @@ from flask import g, jsonify, request, session
 import subprocess as sp
 import speech_recognition as sr
 import os
-import ssl
 
 app = create_app(debug=False)
 
@@ -57,4 +56,4 @@ def remove_files():
             os.remove(f)
 
 if __name__ == '__main__':
-    socketio.run(app, certfile='cert.pen', keyfile='key.pem')
+    socketio.run(app)
