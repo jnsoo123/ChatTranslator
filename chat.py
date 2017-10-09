@@ -4,6 +4,7 @@ from flask import g, jsonify, request, session
 import subprocess as sp
 import speech_recognition as sr
 import os
+from pydub import AudioSegment
 
 app = create_app(debug=False)
 
@@ -27,17 +28,8 @@ def record_voice():
         f.write(request.files['file'].read())
         f.close()
 
-        cmdline = [
-            'avconv',
-            '-i',
-            'speech.ogg',
-            '-vn',
-            '-f',
-            'wav',
-            'speech.wav'
-        ]
-
-        sp.call(cmdline)
+        sound = AudioSegment.from_file('speech.ogg')
+        sound.export('speech.wav', format='wav')
 
         r = sr.Recognizer()
         with sr.AudioFile('speech.wav') as source:
