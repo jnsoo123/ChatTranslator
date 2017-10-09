@@ -44,7 +44,8 @@ def record_voice():
             audio = r.record(source)
         
         text = r.recognize_google(audio, language=str(lang))
-    except Exception:
+    except Exception as e:
+        print e
         text = 'Unable to understand'
     finally:
         return jsonify(text)
