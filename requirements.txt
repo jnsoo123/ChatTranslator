@@ -4,3 +4,4 @@ WTForms==1.0.5
 translate==2.0.0
 Flask_WTF==0.9.5
 Flask_SocketIO==2.9.2
+eventlet==0.21.0
