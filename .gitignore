@@ -53,5 +53,5 @@ coverage.xml
 docs/_build/
 
 .DS_Store
-.wav
-.ogg
+*.wav
+*.ogg

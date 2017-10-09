@@ -14,7 +14,7 @@ def index():
         session['room']         = form.room.data
         session['from_locale']  = form.from_locale.data
         session['to_locale']    = form.to_locale.data
-        return redirect(url_for('.chat'))
+        return redirect(url_for('.chat', _scheme='https', _external=True))
     elif request.method == 'GET':
         form.name.data          = session.get('name', '')
         form.room.data          = session.get('room', '')
