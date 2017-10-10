@@ -37,7 +37,7 @@ def text(message):
     db.execute('insert into messages (user, message, room) values (?, ?, ?)', [name, message, room])
     db.commit()
 
-    emit('message', {'msg': message}, room=room)
+    emit('message', {'msg': message}, room=room) 
 
 @socketio.on('left', namespace='/chat')
 def left(message):

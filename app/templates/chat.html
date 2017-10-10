@@ -34,6 +34,11 @@ $(document).ready(function(){
       socket.emit('text', {msg: text});
     }
   });
+  $('#send-message').click(function() {
+    $('#text').click();
+    var e = $.Event('keypress', { which: 13 });
+    $('#text').trigger(e);
+  });
 
   $('#translator-locale-changer option[data-locale={{ session['to_locale'] }}]').attr('selected', 'selected');
   $('#chat-locale-changer option[data-locale={{ session['from_locale'] }}]').attr('selected', 'selected');
@@ -72,9 +77,13 @@ $(document).ready(function(){
         }).done(function(data){
           recordButton.html('Hold to record <i class="fa fa-microphone"></i>');
           if(data != 'Unable to understand') {
+            $('.help-block').addClass('hidden');
+            $('.chat-field').removeClass('has-error');
             $('#text').val(data);
           } else {
             console.log('not understand');
+            $('.help-block').removeClass('hidden');
+            $('.chat-field').addClass('has-error');
           }
         });
         chunks = [];
@@ -114,6 +123,7 @@ function change_chat_locale() {
   let locale = $('#chat-locale-changer').find(':selected').attr('data-locale');
   socket.emit('change_locale', { type: 'from_locale', locale: locale })  
 }
+
 </script>
 {% endblock %}
 {% for message in messages %}
@@ -129,12 +139,16 @@ function change_chat_locale() {
     </div>
     <div class='row'>
       <div class='col-xs-9'>
-        <div class="chat-field">
+        <div class="chat-field form-group">
           <input id="text" size="80" placeholder="Enter your message here" class="form-control">
+          <span class='help-block hidden'>Did not understand</span>
         </div>
       </div>
       <div class='col-xs-3'>
-        <button id='record-voice' class='btn btn-primary'>Hold to record <i class='fa fa-microphone'></i></button>
+        <button id='send-message' class='btn btn-primary'>Send <i class='fa fa-paper-plane'></i></button>
+      </div>
+      <div class='col-xs-9 record'>
+        <button id='record-voice' class='btn btn-primary'>Hold to Record <i class='fa fa-microphone'></i></button>
       </div>
     </div>
     <div class="lang-change">
