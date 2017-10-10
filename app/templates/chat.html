@@ -34,6 +34,11 @@ $(document).ready(function(){
       socket.emit('text', {msg: text});
     }
   });
+  $('#send-message').click(function() {
+     $('#text').click();
+        var e = $.Event('keypress', { which: 13 });
+-       $('#text').trigger(e);
+  });
 
   $('#translator-locale-changer option[data-locale={{ session['to_locale'] }}]').attr('selected', 'selected');
   $('#chat-locale-changer option[data-locale={{ session['from_locale'] }}]').attr('selected', 'selected');
@@ -128,13 +133,16 @@ function change_chat_locale() {
       <textarea disabled="true" class="form-control" id="chat" cols="80" rows="20"></textarea>
     </div>
     <div class='row'>
+     <div class='col-xs-9 record'>
+          <button id='record-voice' class='btn btn-primary'>Hold to Record <i class='fa fa-microphone'></i></button>
+      </div>
       <div class='col-xs-9'>
         <div class="chat-field">
           <input id="text" size="80" placeholder="Enter your message here" class="form-control">
         </div>
       </div>
       <div class='col-xs-3'>
-        <button id='record-voice' class='btn btn-primary'>Hold to record <i class='fa fa-microphone'></i></button>
+        <button id='send-message' class='btn btn-primary'>Send <i class='fa fa-paper-plane'></i></button>
       </div>
     </div>
     <div class="lang-change">

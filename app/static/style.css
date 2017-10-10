@@ -102,6 +102,19 @@ div {
     	width: 100%;
   	}
 
+#send-message {
+	width: 100%;
+}
+
+.record {
+	width: 100%;
+	text-align: center;
+}
+
+	.record button {
+		width: 100%;
+	}
+
 .lang-change {
 	float: left;
 	margin-right: 14.3%;
