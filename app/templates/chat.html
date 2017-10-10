@@ -62,7 +62,7 @@ $(document).ready(function(){
         }
 
       mediaRecorder.onstop = function(e) {
-        recordButton.html('Translating...');
+        recordButton.html('Recognizing...');
         var blob = new Blob(chunks, { 'type': 'audio/ogg;codecs=opus' });
         var form = new FormData();
         var lang = $('#chat-locale-changer').find(':selected').attr('data-locale');
@@ -158,7 +158,6 @@ function change_chat_locale() {
         <select id='chat-locale-changer' class="form-control" onchange="change_chat_locale()">
           <option data-locale='en-US'>English</option>
           <option data-locale='ja'>Japanese</option>
-          <option data-locale='zh-TK'>Chinese</option>
         </select>
       </div>
       <div class="lang-block">
@@ -166,7 +165,6 @@ function change_chat_locale() {
         <select id='translator-locale-changer' class="form-control" onchange="change_translator_locale()">
           <option data-locale='en-US'>English</option>
           <option data-locale='ja'>Japanese</option>
-          <option data-locale='zh-TK'>Chinese</option>
         </select>
       </div>
       <div class="clear"></div>
