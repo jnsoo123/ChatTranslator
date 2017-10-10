@@ -32,7 +32,7 @@ def chat():
     room = session.get('room', '')
 
     db       = database.get_db()
-    cur      = db.execute('select message from messages where room = ? order by id desc', [room])
+    cur      = db.execute('select message from messages where room = ? order by id asc', [room])
     messages = cur.fetchall()
 
     if name == '' or room == '':
