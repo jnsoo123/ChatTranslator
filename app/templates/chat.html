@@ -73,8 +73,6 @@ $(document).ready(function(){
           recordButton.html('Hold to record <i class="fa fa-microphone"></i>');
           if(data != 'Unable to understand') {
             $('#text').val(data);
-            var e = $.Event('keypress', { which: 13 });
-            $('#text').trigger(e);
           } else {
             console.log('not understand');
           }
