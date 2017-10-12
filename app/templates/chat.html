@@ -5,16 +5,13 @@
 <script type="text/javascript" charset="utf-8">
 $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 var socket;
-
 $(document).ready(function(){
   var recordButton = $('#record-voice');
-
   if (location.protocol == 'https:'){
     socket = io.connect('https://' + document.domain + ':' + location.port + '/chat');
   } else {
     socket = io.connect('http://' + document.domain + ':' + location.port + '/chat');
   }
-
   socket.on('connect', function() {
     socket.emit('joined', {});
   });
@@ -39,14 +36,11 @@ $(document).ready(function(){
     var e = $.Event('keypress', { which: 13 });
     $('#text').trigger(e);
   });
-
   $('#translator-locale-changer option[data-locale={{ session['to_locale'] }}]').attr('selected', 'selected');
   $('#chat-locale-changer option[data-locale={{ session['from_locale'] }}]').attr('selected', 'selected');
-
   $('.message-container').each(function(){
     $('#chat').val($('#chat').val() + $(this).val() + '\n')
   })
-
   navigator.getUserMedia = navigator.getUserMedia || navigator.webkitGetUsermedia || navigator.mozGetUserMedia;
   if(navigator.getUserMedia){
     console.log('Get User Media Supported');
@@ -60,7 +54,6 @@ $(document).ready(function(){
         mediaRecorder.ondataavailable = function(e){
           chunks.push(e.data);
         }
-
       mediaRecorder.onstop = function(e) {
         recordButton.html('Recognizing...');
         var blob = new Blob(chunks, { 'type': 'audio/ogg;codecs=opus' });
@@ -88,7 +81,6 @@ $(document).ready(function(){
         });
         chunks = [];
       }
-
       recordButton.on('mousedown', function(){
         recordButton.html('Recording...');
         mediaRecorder.start();
@@ -101,9 +93,7 @@ $(document).ready(function(){
       console.log('failure callback');
     });
   }
-
 });
-
 function leave_room() {
   socket.emit('left', {}, function() {
     socket.disconnect();
@@ -111,19 +101,16 @@ function leave_room() {
     window.location.href = "{{ url_for('main.index') }}";
   });
 }
-
 function change_translator_locale() {
   // change current locale
   let locale = $('#translator-locale-changer').find(':selected').attr('data-locale');
   socket.emit('change_locale', { type: 'to_locale', locale: locale })  
 }
-
 function change_chat_locale() {
   // change chat locale
   let locale = $('#chat-locale-changer').find(':selected').attr('data-locale');
   socket.emit('change_locale', { type: 'from_locale', locale: locale })  
 }
-
 </script>
 {% endblock %}
 {% for message in messages %}

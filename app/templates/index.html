@@ -5,22 +5,28 @@
 <h1>Chat Auto Translator</h1>
 </section>
 <section class="container container-fluid">
-  <form method="POST">
-    {{ form.hidden_tag() }}
-    <label>Name</label>
-    {{ form.name(placeholder="Name", class_="textfield form-control") }} {% for error in form.name.errors %}{{ error }}{% endfor %}
-    <br>
-    <label>Room</label>
-    {{ form.room(placeholder="Room Name", class_="textfield form-control") }} {% for error in form.room.errors %}{{ error }}{% endfor %}
-    <br>
-    <label>Set chat locale</label>
-    {{ form.from_locale(placeholder="e.g. EN", class_="textfield form-control") }} {% for error in form.from_locale.errors %}{{ error }}{% endfor %}
-    <br>
-    <label>Set chat translator</label>
-    {{ form.to_locale(placeholder="e.g. JA", class_="textfield form-control") }} {% for error in form.to_locale.errors %}{{ error }}{% endfor %}
-    <br>
-    {{ form.submit(class_="submit form-control") }}
-  </form>
+  <div class="chat-block">
+    <form method="POST">
+      {{ form.hidden_tag() }}
+      <label>Name</label>
+      {{ form.name(placeholder="Name", class_="textfield form-control") }} {% for error in form.name.errors %}{{ error }}{% endfor %}
+      <br>
+      <label>Room</label>
+      {{ form.room(placeholder="Room Name", class_="textfield form-control") }} {% for error in form.room.errors %}{{ error }}{% endfor %}
+      <br>
+      <label>Set chat locale</label>
+      {{ form.from_locale(placeholder="e.g. EN", class_="textfield form-control") }} {% for error in form.from_locale.errors %}{{ error }}{% endfor %}
+      <br>
+      <label>Set chat translator</label>
+      {{ form.to_locale(placeholder="e.g. JA", class_="textfield form-control") }} {% for error in form.to_locale.errors %}{{ error }}{% endfor %}
+      <br>
+      {{ form.submit(class_="submit form-control") }}
+      </form>
+  </div>
+  <div class="vid-block">
+    <a href="#" class="btn btn-primary">Transcript a Video</a>
+  </div>
+  <div class="clear"></div>
 </section>
 </div>
 {% endblock %}

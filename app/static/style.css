@@ -25,7 +25,7 @@ div {
 }
 
 .front {
-  max-width: 400px;
+  max-width: 700px;
 }
 
 .front input {
@@ -150,4 +150,20 @@ div {
 
 .clear {
   clear: both;
+}
+
+
+.chat-block {
+  float: left;
+  border-right: 1px rgba(0,0,0,0.2) solid;
+  padding-right: 25px;
+}
+
+.vid-block {
+  float: right;
+  width: 200px;
+}
+
+.video {
+  width: 600px;
 }
