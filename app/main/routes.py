@@ -1,8 +1,13 @@
-from flask import session, redirect, url_for, render_template, request
+from __future__ import unicode_literals
+from flask import session, redirect, url_for, render_template, request, jsonify
 from . import main
 from .forms import LoginForm
 from flask_bootstrap import Bootstrap
 from .. import database
+import youtube_dl
+import os
+import speech_recognition as sr
+from pydub import AudioSegment
 
 @main.route('/', methods=['GET', 'POST'])
 def index():
@@ -38,3 +43,44 @@ def chat():
     if name == '' or room == '':
         return redirect(url_for('.index'))
     return render_template('chat.html', name=name, room=room, messages=messages)
+
+@main.route('/transcript')
+def transcript():
+    """YT Transcript Page."""
+    return render_template('transcript.html')
+
+@main.route('/_transcribe', methods=['POST'])
+def transcribe():
+    """Transcribes youtube video to text."""
+
+    array_files = ['transcript.mp3', 'text.wav']
+    for f in array_files:
+        if os.path.exists(f):
+            os.remove(f)
+
+    try:
+        url = request.form.get('url')
+        ydl_opts = {
+            'format': 'bestaudio/best',
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192'
+            }],
+            'outtmpl': 'transcript.%(ext)s'
+        }
+    
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([url])
+
+        sound = AudioSegment.from_file('transcript.mp3')
+        sound.export('text.wav', format='wav')
+
+        r = sr.Recognizer()
+        with sr.AudioFile('text.wav') as source:
+            audio = r.record(source)
+
+        text = r.recognize_sphinx(audio)
+        return jsonify(text)
+    except Exception:
+        return jsonify('error')

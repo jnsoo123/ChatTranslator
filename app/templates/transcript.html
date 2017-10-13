@@ -1,0 +1,57 @@
+{% extends 'layout.html' %}
+{% block body %}
+{% block javascript %}
+<script type="text/javascript" charset="utf-8">
+$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
+$(document).ready(function(){
+  $('.help-block').hide();
+
+  $('#submit-url').submit(function(){
+    $('#transcribe-button').html('Transcribing... Please Wait...').attr('disabled', 'true')
+    let url = $('#url').val();
+    $.ajax({
+      type: 'POST',
+      url: $SCRIPT_ROOT + '/_transcribe' ,
+      data: {url: url}
+    }).done(function(response){
+      $('#transcribe-button').html('Transcribe').removeAttr('disabled');
+      if(response != 'error'){
+        $('#url-form-group').removeClass('has-error');
+        $('.help-block').hide();
+        $('#transcripted-text').val(response);
+      } else {
+        console.log('error');
+        $('#url-form-group').addClass('has-error');
+        $('.help-block').show();
+      }
+    });
+    return false;
+  });
+});
+</script>
+{% endblock %}
+<div class="content front">
+  <section class="top">
+    <h1>Youtube Transcriptor</h1>
+  </section>
+  <section class='container container-fluid'>
+    <form id='submit-url'>
+      <div id='url-form-group' class='form-group'>
+        <label>Enter Youtube URL</label>
+        <input id='url' type='text' class='form-control' placeholder='Eg. https://www.youtube.com/watch?v=FZRNxMdn2rw'/>
+        <span class='help-block'>Invalid YouTube Url</span>
+      </div>
+
+      <div class='form-group'>
+        <button id='transcribe-button' type='submit' class='btn btn-primary' style='width: 100%;'>Transcribe</button>
+      </div>
+    </form>
+
+    <div class='form-group'>
+      <label>Transcripted Text</label>
+      <textarea id='transcripted-text' class='form-control' rows='10'></textarea>
+    </div>
+  </section>
+</div>
+{% endblock %}
