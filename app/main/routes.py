@@ -79,5 +79,6 @@ def transcribe():
                 os.remove(f)
 
         return jsonify(text)
-    except Exception:
+    except Exception as e:
+        print e
         return jsonify('error')
