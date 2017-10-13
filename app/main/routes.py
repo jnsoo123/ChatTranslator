@@ -51,18 +51,13 @@ def transcript():
 
 @main.route('/_transcribe', methods=['POST'])
 def transcribe():
-    array_files = ['transcript.mp3', 'text.wav']
-    for f in array_files:
-        if os.path.exists(f):
-            os.remove(f)
-
     """Transcribes youtube video to text."""
     url = request.form.get('url')
     ydl_opts = {
         'format': 'bestaudio/best',
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
+            'preferredcodec': 'wav',
             'preferredquality': '192'
         }],
         'outtmpl': 'transcript.%(ext)s'
@@ -71,12 +66,15 @@ def transcribe():
     with youtube_dl.YoutubeDL(ydl_opts) as ydl:
         ydl.download([url])
 
-    sound = AudioSegment.from_file('transcript.mp3')
-    sound.export('text.wav', format='wav')
-
     r = sr.Recognizer()
-    with sr.AudioFile('text.wav') as source:
+    with sr.AudioFile('transcript.wav') as source:
         audio = r.record(source)
 
     text = r.recognize_sphinx(audio)
+
+    array_files = ['transcript.wav']
+    for f in array_files:
+        if os.path.exists(f):
+            os.remove(f)
+
     return jsonify(text)
