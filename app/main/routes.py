@@ -52,29 +52,32 @@ def transcript():
 @main.route('/_transcribe', methods=['POST'])
 def transcribe():
     """Transcribes youtube video to text."""
-    url = request.form.get('url')
-    ydl_opts = {
-        'format': 'bestaudio/best',
-        'postprocessors': [{
-            'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'wav',
-            'preferredquality': '192'
-        }],
-        'outtmpl': 'transcript.%(ext)s'
-    }
+    try:
+        url = request.form.get('url')
+        ydl_opts = {
+            'format': 'bestaudio/best',
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'wav',
+                'preferredquality': '192'
+            }],
+            'outtmpl': 'transcript.%(ext)s'
+        }
 
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([url])
 
-    r = sr.Recognizer()
-    with sr.AudioFile('transcript.wav') as source:
-        audio = r.record(source)
+        r = sr.Recognizer()
+        with sr.AudioFile('transcript.wav') as source:
+            audio = r.record(source)
 
-    text = r.recognize_sphinx(audio)
+        text = r.recognize_sphinx(audio)
 
-    array_files = ['transcript.wav']
-    for f in array_files:
-        if os.path.exists(f):
-            os.remove(f)
+        array_files = ['transcript.wav']
+        for f in array_files:
+            if os.path.exists(f):
+                os.remove(f)
 
-    return jsonify(text)
+        return jsonify(text)
+    except Exception:
+        return jsonify('error')
