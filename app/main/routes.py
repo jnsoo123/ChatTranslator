@@ -51,32 +51,36 @@ def transcript():
 
 @main.route('/_transcribe', methods=['POST'])
 def transcribe():
+    """Transcribes youtube video to text."""
+
     array_files = ['transcript.mp3', 'text.wav']
     for f in array_files:
         if os.path.exists(f):
             os.remove(f)
 
-    """Transcribes youtube video to text."""
-    url = request.form.get('url')
-    ydl_opts = {
-        'format': 'bestaudio/best',
-        'postprocessors': [{
-            'key': 'FFmpegExtractAudio',
-            'preferredcodec': 'mp3',
-            'preferredquality': '192'
-        }],
-        'outtmpl': 'transcript.%(ext)s'
-    }
+    try:
+        url = request.form.get('url')
+        ydl_opts = {
+            'format': 'bestaudio/best',
+            'postprocessors': [{
+                'key': 'FFmpegExtractAudio',
+                'preferredcodec': 'mp3',
+                'preferredquality': '192'
+            }],
+            'outtmpl': 'transcript.%(ext)s'
+        }
+    
+        with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+            ydl.download([url])
 
-    with youtube_dl.YoutubeDL(ydl_opts) as ydl:
-        ydl.download([url])
+        sound = AudioSegment.from_file('transcript.mp3')
+        sound.export('text.wav', format='wav')
 
-    sound = AudioSegment.from_file('transcript.mp3')
-    sound.export('text.wav', format='wav')
+        r = sr.Recognizer()
+        with sr.AudioFile('text.wav') as source:
+            audio = r.record(source)
 
-    r = sr.Recognizer()
-    with sr.AudioFile('text.wav') as source:
-        audio = r.record(source)
-
-    text = r.recognize_sphinx(audio)
-    return jsonify(text)
+        text = r.recognize_sphinx(audio)
+        return jsonify(text)
+    except Exception:
+        return jsonify('error')

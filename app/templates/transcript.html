@@ -5,6 +5,8 @@
 $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 
 $(document).ready(function(){
+  $('.help-block').hide();
+
   $('#submit-url').submit(function(){
     $('#transcribe-button').html('Transcribing... Please Wait...').attr('disabled', 'true')
     let url = $('#url').val();
@@ -13,9 +15,16 @@ $(document).ready(function(){
       url: $SCRIPT_ROOT + '/_transcribe' ,
       data: {url: url}
     }).done(function(response){
-      $('#transcribe-button').html('Transcribe').attr('disabled', 'false');
-      console.log(response);
-      $('#transcripted-text').val(response);
+      $('#transcribe-button').html('Transcribe').removeAttr('disabled');
+      if(response != 'error'){
+        $('#url-form-group').removeClass('has-error');
+        $('.help-block').hide();
+        $('#transcripted-text').val(response);
+      } else {
+        console.log('error');
+        $('#url-form-group').addClass('has-error');
+        $('.help-block').show();
+      }
     });
     return false;
   });
@@ -28,10 +37,11 @@ $(document).ready(function(){
   </section>
   <section class='container container-fluid'>
     <form id='submit-url'>
-     <div class='field-container'>
       <div class='form-group'>
+      <div id='url-form-group' class='form-group'>
         <label>Enter Youtube URL</label>
         <input id='url' type='text' class='form-control' placeholder='Eg. https://www.youtube.com/watch?v=FZRNxMdn2rw'/>
+        <span class='help-block'>Invalid YouTube Url</span>
       </div>
 
       <div class='form-group'>
