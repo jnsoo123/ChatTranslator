@@ -31,12 +31,13 @@ $(document).ready(function(){
 });
 </script>
 {% endblock %}
-<div class="content front">
+<div class="content trans">
   <section class="top">
     <h1>Youtube Transcriptor</h1>
   </section>
   <section class='container container-fluid'>
     <form id='submit-url'>
+      <div class='form-group'>
       <div id='url-form-group' class='form-group'>
         <label>Enter Youtube URL</label>
         <input id='url' type='text' class='form-control' placeholder='Eg. https://www.youtube.com/watch?v=FZRNxMdn2rw'/>
@@ -46,12 +47,14 @@ $(document).ready(function(){
       <div class='form-group'>
         <button id='transcribe-button' type='submit' class='btn btn-primary' style='width: 100%;'>Transcribe</button>
       </div>
+      </div>
     </form>
 
     <div class='form-group'>
       <label>Transcripted Text</label>
       <textarea id='transcripted-text' class='form-control' rows='10'></textarea>
     </div>
+    <a href="#" class="return btn-warning" onclick="window.history.go(-1); return false;">Return Home</a>
   </section>
 </div>
 {% endblock %}
